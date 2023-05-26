@@ -1,0 +1,32 @@
+﻿@model UserLoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <form method="post" class="w-75 m-5 p-3 shadow mx-auto">
+
+        <div class="mb-3">
+            <label class="form-label">Kullanıcı adı</label>
+            <input asp-for="UserName" class="form-control" />
+            <span class="text-danger" asp-validation-for="UserName"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Şifre</label>
+            <input asp-for="Password" class="form-control" />
+            <span class="text-danger" asp-validation-for="Password"></span>
+        </div>
+
+        <div class="mb-3">
+            <button class="btn btn-success btn-sm">Giriş Yap</button>
+        </div>
+
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+    </form>
+</div>
+<script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+

@@ -1,0 +1,22 @@
+﻿@model CreateCategoryModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" class="w-75 m-5 p-3 mx-auto">
+
+    <div class="mb-3">
+        <label class="form-label">Kategori adı</label>
+        <input asp-for="Definiton" class="form-control" />
+        <span class="text-danger" asp-validation-for="Definiton"></span>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-success btn-sm">Ekle</button>
+    </div>
+
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+</form>
+
