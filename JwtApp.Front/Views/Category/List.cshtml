@@ -14,6 +14,7 @@
                 <th>#</th>
                 <th>Kategori</th>
                 <th>Sil</th>
+                <th>Güncele</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
                     <td>@category.Id</td>
                     <td>@category.Definition</td>
                     <td><a class="btn btn-danger btn-sm" asp-route-id="@category.Id" asp-action="Remove" asp-controller="Category">Sil</a></td>
+                    <td><a class="btn btn-danger btn-sm" asp-route-id="@category.Id" asp-action="Update" asp-controller="Category">Güncelle</a></td>
                 </tr>
             }
             

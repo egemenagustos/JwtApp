@@ -1,4 +1,5 @@
-﻿using JwtApp.Back.Core.Application.Features.CQRS.Commands;
+﻿using AutoMapper;
+using JwtApp.Back.Core.Application.Features.CQRS.Commands;
 using JwtApp.Back.Core.Application.Interfaces;
 using JwtApp.Back.Core.Domain;
 using MediatR;

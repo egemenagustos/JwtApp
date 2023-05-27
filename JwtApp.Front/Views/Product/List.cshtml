@@ -17,6 +17,7 @@
                 <th>Stok</th>
                 <th>Fiyat</th>
                 <th>Sil</th>
+                <th>Güncelle</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                     <td>@product.Stock</td>
                     <td>@product.Price</td>
                     <td><a class="btn btn-danger btn-sm" asp-route-id="@product.Id" asp-action="Remove" asp-controller="Product">Sil</a></td>
+                    <td><a class="btn btn-success btn-sm" asp-route-id="@product.Id" asp-action="Update" asp-controller="Product">Gücelle</a></td>
                 </tr>
             }
 

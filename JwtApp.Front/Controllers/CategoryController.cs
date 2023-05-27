@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
-using System.Text.Unicode;
 
 namespace JwtApp.Front.Controllers
 {
@@ -68,6 +67,56 @@ namespace JwtApp.Front.Controllers
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                     var response = await client.PostAsync("https://localhost:7188/api/Category/",content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(List));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Bir hata oluştu!");
+                    }
+                }
+            }
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var token = User.Claims.FirstOrDefault(x => x.Type == "accessToken")?.Value;
+            if (token != null)
+            {
+                var client = _httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var response = await client.GetAsync($"https://localhost:7188/api/Category/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonData = await response.Content.ReadAsStringAsync();
+                    var result = JsonSerializer.Deserialize<CategoryListModel>(jsonData, new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    });
+                    return View(result);
+                }
+            }
+            return RedirectToAction(nameof(List));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryListModel request)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = User.Claims.FirstOrDefault(x => x.Type == "accessToken")?.Value;
+                if (token != null)
+                {
+                    var client = _httpClientFactory.CreateClient();
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    var jsonData = JsonSerializer.Serialize(request);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    var response = await client.PutAsync("https://localhost:7188/api/Category", content);
 
                     if (response.IsSuccessStatusCode)
                     {

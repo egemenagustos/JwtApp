@@ -1,0 +1,22 @@
+﻿@model CategoryListModel
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form method="post" class="w-75 m-5 p-3 mx-auto" asp-action="Update" asp-controller="Category">
+    <input type="hidden" asp-for="Id"/>
+    <div class="mb-3">
+        <label class="form-label">Kategori adı</label>
+        <input asp-for="Definition" class="form-control" />
+        <span class="text-danger" asp-validation-for="Definition"></span>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-success btn-sm">Güncelle</button>
+    </div>
+
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+</form>

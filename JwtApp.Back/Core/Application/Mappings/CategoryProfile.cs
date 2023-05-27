@@ -8,7 +8,7 @@ namespace JwtApp.Back.Core.Application.Mappings
     {
         public CategoryProfile()
         {
-            CreateMap<Category, CategoryListDto>();
+            CreateMap<Category, CategoryListDto>().ReverseMap();
         }
     }
 }
