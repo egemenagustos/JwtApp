@@ -4,7 +4,6 @@ using JwtApp.Back.Core.Application.Features.CQRS.Queries;
 using JwtApp.Back.Core.Application.Interfaces;
 using JwtApp.Back.Core.Domain;
 using MediatR;
-using System.Collections.Generic;
 
 namespace JwtApp.Back.Core.Application.Features.CQRS.Handlers
 {

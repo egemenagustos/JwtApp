@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -158,7 +157,7 @@ namespace JwtApp.Front.Controllers
             if (data != null)
             {
                 var categories = JsonSerializer.Deserialize<List<SelectListItem>>(data);
-                request.Categories = new SelectList(categories, "Value", "Text",request.CategoryId);
+                request.Categories = new SelectList(categories, "Value", "Text", request.CategoryId);
             }
             if (ModelState.IsValid)
             {
@@ -180,7 +179,7 @@ namespace JwtApp.Front.Controllers
                 }
             }
             return View(request);
-        } 
+        }
 
     }
 }

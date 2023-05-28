@@ -2,7 +2,6 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace JwtApp.Back.Infrastructure.Tools
@@ -27,7 +26,7 @@ namespace JwtApp.Back.Infrastructure.Tools
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenDefaults.Key));
 
-            SigningCredentials credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
+            SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var expireDate = DateTime.UtcNow.AddMinutes(JwtTokenDefaults.Expire);
 

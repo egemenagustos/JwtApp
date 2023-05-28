@@ -13,7 +13,7 @@ namespace JwtApp.Back.Persistance.Contexts
 
         public Context(DbContextOptions<Context> opt) : base(opt)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

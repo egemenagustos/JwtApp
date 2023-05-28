@@ -11,6 +11,6 @@ namespace JwtApp.Front.Controllers
             return View();
         }
 
-        
+
     }
 }

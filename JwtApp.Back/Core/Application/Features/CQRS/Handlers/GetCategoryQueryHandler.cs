@@ -20,8 +20,8 @@ namespace JwtApp.Back.Core.Application.Features.CQRS.Handlers
 
         public async Task<CategoryListDto> Handle(GetCategoryQueryRequest request, CancellationToken cancellationToken)
         {
-           var data = await _repository.GetByFilterAsync(x => x.Id == request.Id);
-           return _mapper.Map<CategoryListDto>(data);
+            var data = await _repository.GetByFilterAsync(x => x.Id == request.Id);
+            return _mapper.Map<CategoryListDto>(data);
         }
     }
 }

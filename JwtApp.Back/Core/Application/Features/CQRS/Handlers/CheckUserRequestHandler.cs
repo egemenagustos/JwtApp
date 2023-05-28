@@ -28,7 +28,7 @@ namespace JwtApp.Back.Core.Application.Features.CQRS.Handlers
                 dto.Id = user.Id;
                 dto.IsExist = true;
                 var role = await _roleRepository.GetByFilterAsync(x => x.Id == user.AppRoleId);
-                dto.Role = role.Definition;              
+                dto.Role = role.Definition;
             }
             else
             {

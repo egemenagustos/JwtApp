@@ -2,9 +2,7 @@
 using JwtApp.Back.Core.Application.Features.CQRS.Queries;
 using JwtApp.Back.Infrastructure.Tools;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace JwtApp.Back.Controllers
 {
@@ -23,7 +21,7 @@ namespace JwtApp.Back.Controllers
         public async Task<IActionResult> Register(RegisterUserCommandRequest request)
         {
             await _mediator.Send(request);
-            return Created("",request);
+            return Created("", request);
         }
 
         [HttpPost("[action]")]
@@ -31,7 +29,7 @@ namespace JwtApp.Back.Controllers
         {
             var dto = await _mediator.Send(request);
             if (dto.IsExist)
-            { 
+            {
                 return Created("", JwtTokenGenerator.GenerateToken(dto));
             }
             else

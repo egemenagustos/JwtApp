@@ -46,7 +46,7 @@ namespace JwtApp.Front.Controllers
                     var jsonData = await responseMessage.Content.ReadAsStringAsync();
 
                     /* Okuduğum dataları kendi oluşturduğum modele dönüştürdüm.*/
-                    var tokenModel = JsonSerializer.Deserialize<JwtTokenResponseModel>(jsonData, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
+                    var tokenModel = JsonSerializer.Deserialize<JwtTokenResponseModel>(jsonData, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
                     /* Yine aldığım dataları koşula koydum ki data geldiğinden emin olayım.*/
                     if (tokenModel != null)
@@ -58,25 +58,25 @@ namespace JwtApp.Front.Controllers
 
                         var claims = token.Claims.ToList();
 
-                        if(tokenModel.Token != null)
+                        if (tokenModel.Token != null)
                         {
                             claims.Add(new Claim("accessToken", tokenModel.Token));
                         }
-                        
+
                         /* Token sayesinde gelen claim bilgilerimi okudum.*/
                         var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
 
                         /* Token için bitiş tarihini ve tarayıcının beni hatırlayıp hatırlamamasını belirttim. */
                         var authProp = new AuthenticationProperties
                         {
-                            ExpiresUtc = tokenModel.ExpireDate, 
-                            IsPersistent = true 
+                            ExpiresUtc = tokenModel.ExpireDate,
+                            IsPersistent = true
                         };
 
                         /* Veee giriş işlemini yaptım. */
                         await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProp);
 
-                        return RedirectToAction("Index","Home");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else

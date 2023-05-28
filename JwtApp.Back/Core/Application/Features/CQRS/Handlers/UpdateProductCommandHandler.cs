@@ -17,7 +17,7 @@ namespace JwtApp.Back.Core.Application.Features.CQRS.Handlers
         public async Task<Unit> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
             var updatedEntity = await _repository.GetByIdAsync(request.Id);
-            if(updatedEntity != null)
+            if (updatedEntity != null)
             {
                 updatedEntity.CategoryId = request.CategoryId;
                 updatedEntity.Stock = request.Stock;

@@ -28,15 +28,15 @@ namespace JwtApp.Back.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-           var data = await _mediator.Send(new GetCategoryQueryRequest(id));
-           return data != null ? Ok(data) : NotFound();
+            var data = await _mediator.Send(new GetCategoryQueryRequest(id));
+            return data != null ? Ok(data) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryCommandRequest request)
         {
             await _mediator.Send(request);
-            return Created("",request);
+            return Created("", request);
         }
 
         [HttpPut]

@@ -66,7 +66,7 @@ namespace JwtApp.Front.Controllers
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync("https://localhost:7188/api/Category/",content);
+                    var response = await client.PostAsync("https://localhost:7188/api/Category/", content);
 
                     if (response.IsSuccessStatusCode)
                     {
