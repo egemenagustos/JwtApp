@@ -4,16 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form method="post" class="w-75 m-5 p-3 mx-auto">
+<form method="post" class="w-75 m-5 p-3 mx-auto" asp-action="Create" asp-controller="Category">
 
     <div class="mb-3">
         <label class="form-label">Kategori adı</label>
-        <input asp-for="Definiton" class="form-control" />
-        <span class="text-danger" asp-validation-for="Definiton"></span>
+        <input asp-for="@Model.Definition" class="form-control" />
+        <span class="text-danger" asp-validation-for="@Model.Definition"></span>
     </div>
 
     <div class="mb-3">
-        <button class="btn btn-success btn-sm">Ekle</button>
+        <button class="btn btn-success btn-sm" type="submit">Ekle</button>
     </div>
 
     <div class="text-danger" asp-validation-summary="ModelOnly"></div>

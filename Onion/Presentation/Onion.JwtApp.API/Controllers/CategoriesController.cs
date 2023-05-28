@@ -32,7 +32,7 @@ namespace Onion.JwtApp.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Create(CreateCategoryCommandRequest request)
         {
             var result = await _mediator.Send(request);

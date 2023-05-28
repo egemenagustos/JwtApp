@@ -5,6 +5,6 @@ namespace JwtApp.Front.Models
     public class CreateCategoryModel
     {
         [Required(ErrorMessage = "Kategori adı zorunludur!")]
-        public string Definiton { get; set; } = null!;
+        public string Definition { get; set; } = null!;
     }
 }
