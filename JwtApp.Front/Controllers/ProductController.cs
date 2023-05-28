@@ -59,7 +59,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync("https://localhost:7188/api/Category");
+                var response = await client.GetAsync("https://localhost:7188/api/Categories");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -129,7 +129,7 @@ namespace JwtApp.Front.Controllers
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                     });
 
-                    var responseCategory = await client.GetAsync("https://localhost:7188/api/Category");
+                    var responseCategory = await client.GetAsync("https://localhost:7188/api/Categories");
 
                     if (responseCategory.IsSuccessStatusCode)
                     {
