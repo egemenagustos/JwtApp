@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using JwtApp.Front.Models;
-using JwtApp.Front.ValidationRules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -74,7 +73,7 @@ namespace JwtApp.Front.Controllers
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync("https://localhost:7188/api/Categories/Create", content);
+                    var response = await client.PostAsync("https://localhost:7188/api/Categories", content);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -86,9 +85,9 @@ namespace JwtApp.Front.Controllers
                     }
                 }
             }
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(error.PropertyName,error.ErrorMessage);
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
             }
             return View(request);
         }
@@ -141,9 +140,9 @@ namespace JwtApp.Front.Controllers
                     }
                 }
             }
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(error.PropertyName,error.ErrorMessage);
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
             }
             return View(request);
         }

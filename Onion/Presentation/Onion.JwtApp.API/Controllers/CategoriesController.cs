@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Onion.JwpApp.Application.Features.CQRS.Commands;
@@ -12,10 +13,14 @@ namespace Onion.JwtApp.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IValidator<CreateCategoryCommandRequest> _createValidator;
+        private readonly IValidator<UpdateCategoryCommandRequest> _updateValidator;
 
-        public CategoriesController(IMediator mediator)
+        public CategoriesController(IMediator mediator, IValidator<CreateCategoryCommandRequest> createValidator, IValidator<UpdateCategoryCommandRequest> updateValidator)
         {
             _mediator = mediator;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -32,18 +37,28 @@ namespace Onion.JwtApp.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryCommandRequest request)
         {
-            var result = await _mediator.Send(request);
-            return Created("", result);
+            var status = _createValidator.Validate(request);
+            if (status.IsValid)
+            {
+                var result = await _mediator.Send(request);
+                return Created("", result);
+            }
+            return BadRequest(status.Errors);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateCategoryCommandRequest request)
         {
-            await _mediator.Send(request);
-            return NoContent();
+            var status = _updateValidator.Validate(request);
+            if (status.IsValid)
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            return BadRequest(status.Errors);
         }
 
         [HttpDelete]

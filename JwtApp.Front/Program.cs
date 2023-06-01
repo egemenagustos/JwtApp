@@ -9,7 +9,7 @@ var services = builder.Services;
 services.AddControllersWithViews();
 services.AddHttpClient();
 
-services.AddTransient<IValidator<CategoryUpdateModel>,CategoryUpdateValidator>();
+services.AddTransient<IValidator<CategoryUpdateModel>, CategoryUpdateValidator>();
 services.AddTransient<IValidator<CreateCategoryModel>, CategoryCreateValidator>();
 
 services.AddTransient<IValidator<CreateProductModel>, ProductCreateValidator>();

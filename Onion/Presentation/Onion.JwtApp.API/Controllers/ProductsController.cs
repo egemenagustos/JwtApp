@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Onion.JwpApp.Application.Features.CQRS.Commands;
@@ -12,10 +13,14 @@ namespace Onion.JwtApp.API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IValidator<CreateProductCommandRequest> _createValidator;
+        private readonly IValidator<UpdateProductCommandRequest> _updateValidator;
 
-        public ProductsController(IMediator mediator)
+        public ProductsController(IMediator mediator, IValidator<CreateProductCommandRequest> createValidator, IValidator<UpdateProductCommandRequest> updateValidator)
         {
             _mediator = mediator;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -35,15 +40,26 @@ namespace Onion.JwtApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductCommandRequest request)
         {
-            var result = await _mediator.Send(request);
-            return Created("", result);
+            var status = _createValidator.Validate(request);
+            if (status.IsValid)
+            {
+                var result = await _mediator.Send(request);
+                return Created("", result);
+            }
+            return BadRequest(status.Errors);
+
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProductCommandRequest request)
         {
-            await _mediator.Send(request);
-            return NoContent();
+            var status = _updateValidator.Validate(request);
+            if (status.IsValid)
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            return BadRequest(status.Errors);
         }
 
         [HttpDelete("{id}")]

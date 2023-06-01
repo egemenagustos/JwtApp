@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace JwtApp.Front.Models
+﻿namespace JwtApp.Front.Models
 {
     public class CreateCategoryModel
     {

@@ -115,9 +115,9 @@ namespace JwtApp.Front.Controllers
                     ModelState.AddModelError("", "Bir hata oluştu!");
                 }
             }
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(error.PropertyName,error.ErrorMessage);
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
             }
             return View(request);
         }

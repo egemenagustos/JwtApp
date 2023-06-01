@@ -20,12 +20,12 @@ namespace Onion.JwpApp.Application.Features.CQRS.Handler
 
         public async Task<CreatedCategoryDto> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-                var result = await _repository.CreateAsync(new Category
-                {
-                    Definition = request.Definition
-                });       
-            
-                return _mapper.Map<CreatedCategoryDto>(result);
+            var result = await _repository.CreateAsync(new Category
+            {
+                Definition = request.Definition
+            });
+
+            return _mapper.Map<CreatedCategoryDto>(result);
         }
     }
 }
