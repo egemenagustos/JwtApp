@@ -6,7 +6,7 @@ using Onion.JwpApp.Application.Features.CQRS.Queries;
 
 namespace Onion.JwtApp.API.Controllers
 {
-    [Authorize(Roles = "Admin, Member")]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase

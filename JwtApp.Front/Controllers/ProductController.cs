@@ -1,4 +1,5 @@
-﻿using JwtApp.Front.Models;
+﻿using FluentValidation;
+using JwtApp.Front.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,14 +8,18 @@ using System.Text.Json;
 
 namespace JwtApp.Front.Controllers
 {
-    [Authorize(Roles = "Admin,Member")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IValidator<UpdateProductModel> _updateValidator;
+        private readonly IValidator<CreateProductModel> _createValidtor;
 
-        public ProductController(IHttpClientFactory httpClientFactory)
+        public ProductController(IHttpClientFactory httpClientFactory, IValidator<UpdateProductModel> updateValidator, IValidator<CreateProductModel> createValidtor)
         {
             _httpClientFactory = httpClientFactory;
+            _updateValidator = updateValidator;
+            _createValidtor = createValidtor;
         }
 
         public async Task<IActionResult> List()
@@ -88,7 +93,10 @@ namespace JwtApp.Front.Controllers
                 var categories = JsonSerializer.Deserialize<List<SelectListItem>>(data);
                 request.Categories = new SelectList(categories, "Value", "Text");
             }
-            if (ModelState.IsValid)
+
+            var result = _createValidtor.Validate(request);
+
+            if (result.IsValid)
             {
                 var token = User.Claims.FirstOrDefault(x => x.Type == "accessToken")?.Value;
                 if (token != null)
@@ -106,6 +114,10 @@ namespace JwtApp.Front.Controllers
                     }
                     ModelState.AddModelError("", "Bir hata oluştu!");
                 }
+            }
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName,error.ErrorMessage);
             }
             return View(request);
         }
@@ -159,7 +171,10 @@ namespace JwtApp.Front.Controllers
                 var categories = JsonSerializer.Deserialize<List<SelectListItem>>(data);
                 request.Categories = new SelectList(categories, "Value", "Text", request.CategoryId);
             }
-            if (ModelState.IsValid)
+
+            var result = _updateValidator.Validate(request);
+
+            if (result.IsValid)
             {
                 var token = User.Claims.FirstOrDefault(x => x.Type == "accessToken")?.Value;
                 if (token != null)
@@ -177,6 +192,10 @@ namespace JwtApp.Front.Controllers
                     }
                     ModelState.AddModelError("", "Bir hata oluştu!");
                 }
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
             }
             return View(request);
         }

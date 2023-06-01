@@ -1,5 +1,6 @@
 ﻿using JwtApp.Front.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -87,5 +88,11 @@ namespace JwtApp.Front.Controllers
             }
             return View(request);
         }
+
+        public async Task<IActionResult> LogOut()
+        {
+          await HttpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        } 
     }
 }

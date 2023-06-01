@@ -1,4 +1,6 @@
-﻿using JwtApp.Front.Models;
+﻿using FluentValidation;
+using JwtApp.Front.Models;
+using JwtApp.Front.ValidationRules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -6,14 +8,19 @@ using System.Text.Json;
 
 namespace JwtApp.Front.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Member,Admin")]
     public class CategoryController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IValidator<CategoryUpdateModel> _updateValidator;
+        private readonly IValidator<CreateCategoryModel> _createValidator;
 
-        public CategoryController(IHttpClientFactory httpClientFactory)
+
+        public CategoryController(IHttpClientFactory httpClientFactory, IValidator<CategoryUpdateModel> validator, IValidator<CreateCategoryModel> createValidator)
         {
             _httpClientFactory = httpClientFactory;
+            _updateValidator = validator;
+            _createValidator = createValidator;
         }
 
         public async Task<IActionResult> List()
@@ -43,7 +50,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.DeleteAsync($"https://localhost:7188/api/Categories/{id}");
+                var response = await client.DeleteAsync($"https://localhost:7188/api/Categories?id={id}");
             }
             return RedirectToAction(nameof(List));
         }
@@ -57,7 +64,8 @@ namespace JwtApp.Front.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryModel request)
         {
-            if (ModelState.IsValid)
+            var result = _createValidator.Validate(request);
+            if (result.IsValid)
             {
                 var token = User.Claims.FirstOrDefault(x => x.Type == "accessToken")?.Value;
                 if (token != null)
@@ -78,6 +86,10 @@ namespace JwtApp.Front.Controllers
                     }
                 }
             }
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName,error.ErrorMessage);
+            }
             return View(request);
         }
 
@@ -94,7 +106,7 @@ namespace JwtApp.Front.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonData = await response.Content.ReadAsStringAsync();
-                    var result = JsonSerializer.Deserialize<CategoryListModel>(jsonData, new JsonSerializerOptions
+                    var result = JsonSerializer.Deserialize<CategoryUpdateModel>(jsonData, new JsonSerializerOptions
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                     });
@@ -105,9 +117,10 @@ namespace JwtApp.Front.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(CategoryListModel request)
+        public async Task<IActionResult> Update(CategoryUpdateModel request)
         {
-            if (ModelState.IsValid)
+            var result = _updateValidator.Validate(request);
+            if (result.IsValid)
             {
                 var token = User.Claims.FirstOrDefault(x => x.Type == "accessToken")?.Value;
                 if (token != null)
@@ -127,6 +140,10 @@ namespace JwtApp.Front.Controllers
                         ModelState.AddModelError("", "Bir hata oluştu!");
                     }
                 }
+            }
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName,error.ErrorMessage);
             }
             return View(request);
         }

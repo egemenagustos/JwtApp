@@ -1,3 +1,6 @@
+using FluentValidation;
+using JwtApp.Front.Models;
+using JwtApp.Front.ValidationRules;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +8,12 @@ var services = builder.Services;
 
 services.AddControllersWithViews();
 services.AddHttpClient();
+
+services.AddTransient<IValidator<CategoryUpdateModel>,CategoryUpdateValidator>();
+services.AddTransient<IValidator<CreateCategoryModel>, CategoryCreateValidator>();
+
+services.AddTransient<IValidator<CreateProductModel>, ProductCreateValidator>();
+services.AddTransient<IValidator<UpdateProductModel>, ProductUpdateValidator>();
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
 {
