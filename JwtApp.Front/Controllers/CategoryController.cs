@@ -88,8 +88,9 @@ namespace JwtApp.Front.Controllers
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                return View();
             }
-            return View(request);
+            return View();
         }
 
         [HttpGet]

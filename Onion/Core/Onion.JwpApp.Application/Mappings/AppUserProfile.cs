@@ -9,6 +9,7 @@ namespace Onion.JwpApp.Application.Mappings
         public AppUserProfile()
         {
             CreateMap<AppUser, CreatedUserDto>().ReverseMap();
+            CreateMap<AppUser, UserListDto>().ReverseMap();
         }
     }
 }

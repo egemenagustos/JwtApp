@@ -13,7 +13,7 @@ namespace Onion.JwpApp.Application
     {
         public static void AddAplicationServices(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(CategoryProfile), typeof(ProductProfile), typeof(AppUserProfile));
+            services.AddAutoMapper(typeof(CategoryProfile), typeof(ProductProfile), typeof(AppUserProfile), typeof(AppRoleProfile));
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddTransient<IValidator<CreateCategoryCommandRequest>, CategoryCreateValidator>();
