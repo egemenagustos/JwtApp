@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Onion.JwpApp.Application.Features.CQRS.Commands;
 using Onion.JwpApp.Application.Features.CQRS.Queries;
 
 namespace Onion.JwtApp.API.Controllers
@@ -25,6 +26,13 @@ namespace Onion.JwtApp.API.Controllers
                 return Ok(result);
             }
             return BadRequest("Kullanıcılar bulunamadı.");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateUserCommandRequest request)
+        {
+          await _mediator.Send(request);
+            return NoContent();
         }
     }
 }

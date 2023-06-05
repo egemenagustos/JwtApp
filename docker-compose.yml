@@ -1,0 +1,28 @@
+version: '3.4'
+
+networks:
+  studentappnetwork:  
+
+services:
+  jwtappDB:
+    container_name: jwtappDB
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+     - 8002:1433
+    environment:
+     - ACCEPT_EULA=Y
+     - MSSQL_SA_PASSWORD=test@123
+    networks:
+     - jwtappnetwork
+  studentapp:
+    container_name: jwtapp
+    ports:
+     - 8001:80 
+    image: ${DOCKER_REGISTRY-}jwtapp
+    build:
+      context: .
+      dockerfile: Onion/Presentation/Onion.JwtApp.API/Dockerfile
+       depends_on:
+     - jwtappDB
+    networks:
+     - jwtappnetwork
