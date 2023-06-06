@@ -20,7 +20,7 @@ namespace JwtApp.Front.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7188/api/Users");
+            var response = await client.GetAsync("http://localhost:8080/api/Users");
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
@@ -46,7 +46,7 @@ namespace JwtApp.Front.Controllers
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 var jsonData = JsonSerializer.Serialize(request);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://localhost:7188/api/Auth/Register", content);
+                var response = await client.PostAsync("http://localhost:8080/api/Auth/Register", content);
 
                 if (response.IsSuccessStatusCode)
                 {

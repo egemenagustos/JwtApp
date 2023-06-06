@@ -37,7 +37,7 @@ namespace JwtApp.Front.Controllers
                 var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 
                 /* Gideceğim adrese paramteremdeki dönüştürülmüş json tipindeki datalarımla birlikte isteği attım.*/
-                var responseMessage = await client.PostAsync("https://localhost:7188/api/Auth/Login", content);
+                var responseMessage = await client.PostAsync("http://localhost:8080/api/Auth/Login", content);
 
                 /* Attığım requestten yani istekten gelen response u aldım ve bir koşula koydum.*/
                 if (responseMessage.IsSuccessStatusCode)

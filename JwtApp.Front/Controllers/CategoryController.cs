@@ -29,7 +29,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync("https://localhost:7188/api/Categories");
+                var response = await client.GetAsync("http://localhost:8080/api/Categories");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -49,7 +49,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.DeleteAsync($"https://localhost:7188/api/Categories?id={id}");
+                var response = await client.DeleteAsync($"http://localhost:8080/api/Categories?id={id}");
             }
             return RedirectToAction(nameof(List));
         }
@@ -73,7 +73,7 @@ namespace JwtApp.Front.Controllers
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync("https://localhost:7188/api/Categories", content);
+                    var response = await client.PostAsync("http://localhost:8080/api/Categories", content);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -101,7 +101,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync($"https://localhost:7188/api/Categories/{id}");
+                var response = await client.GetAsync($"http://localhost:8080/api/Categories/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -129,7 +129,7 @@ namespace JwtApp.Front.Controllers
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    var response = await client.PutAsync("https://localhost:7188/api/Categories", content);
+                    var response = await client.PutAsync("http://localhost:8080/api/Categories", content);
 
                     if (response.IsSuccessStatusCode)
                     {

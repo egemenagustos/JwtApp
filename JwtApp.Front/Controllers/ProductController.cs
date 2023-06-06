@@ -29,7 +29,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync("https://localhost:7188/api/Products");
+                var response = await client.GetAsync("http://localhost:8080/api/Products");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -49,7 +49,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.DeleteAsync($"https://localhost:7188/api/Products/{id}");
+                var response = await client.DeleteAsync($"http://localhost:8080/api/Products/{id}");
             }
 
             return RedirectToAction(nameof(List));
@@ -64,7 +64,7 @@ namespace JwtApp.Front.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                var response = await client.GetAsync("https://localhost:7188/api/Categories");
+                var response = await client.GetAsync("http://localhost:8080/api/Categories");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -106,7 +106,7 @@ namespace JwtApp.Front.Controllers
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                    var responseProduct = await client.PostAsync("https://localhost:7188/api/Products", content);
+                    var responseProduct = await client.PostAsync("http://localhost:8080/api/Products", content);
 
                     if (responseProduct.IsSuccessStatusCode)
                     {
@@ -131,7 +131,7 @@ namespace JwtApp.Front.Controllers
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-                var responseProducts = await client.GetAsync($"https://localhost:7188/api/Products/{id}");
+                var responseProducts = await client.GetAsync($"http://localhost:8080/api/Products/{id}");
 
                 if (responseProducts.IsSuccessStatusCode)
                 {
@@ -141,7 +141,7 @@ namespace JwtApp.Front.Controllers
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                     });
 
-                    var responseCategory = await client.GetAsync("https://localhost:7188/api/Categories");
+                    var responseCategory = await client.GetAsync("http://localhost:8080/api/Categories");
 
                     if (responseCategory.IsSuccessStatusCode)
                     {
@@ -184,7 +184,7 @@ namespace JwtApp.Front.Controllers
                     var jsonData = JsonSerializer.Serialize(request);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                    var responseProduct = await client.PutAsync("https://localhost:7188/api/Products", content);
+                    var responseProduct = await client.PutAsync("http://localhost:8080/api/Products", content);
 
                     if (responseProduct.IsSuccessStatusCode)
                     {
